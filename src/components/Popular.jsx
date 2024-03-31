@@ -13,7 +13,7 @@ function Popular() {
 
 
     const getPopular = async () => {
-        const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=#9f1b8c98ff7a41c89e3e1a10669795f2&number=9`);
+        const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=9f1b8c98ff7a41c89e3e1a10669795f2&number=5`);
         
         const data = await api.json();
 
@@ -24,23 +24,31 @@ function Popular() {
 
   return (
 
-    <Wrapper>
-        <h3>Popular Picks</h3>
+    <div>
+        <Wrapper>
+            <h3>Popular Picks</h3>
 
-        <Splide>            
-            {popular.map((recipe) => {
-                return(
-                    <SplideSlide>
-                        <Card key={recipe.id}>
-                            <p>{recipe.title}</p>
-                            <img src={recipe.image} alt="" />
-                        </Card>
-                    </SplideSlide>
-                )
-            }
-            )}
-        </Splide>
-    </Wrapper>
+            <Splide options={{
+                perPage: 5,
+                arrows: false,
+                pagination: false,
+                drag: 'free',
+                gap: '5rem'
+            }}>            
+                { popular.map((recipe) => {
+                    return(
+                        <SplideSlide key={recipe.id}>
+                            <Card >
+                                <p>{recipe.title}</p>
+                                <img src={recipe.image} alt="" />
+                            </Card>
+                        </SplideSlide>
+                    );
+                })}
+            </Splide>
+
+        </Wrapper>
+    </div>
   )
 }
 
