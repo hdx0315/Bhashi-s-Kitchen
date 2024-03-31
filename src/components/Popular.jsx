@@ -105,7 +105,7 @@ const Card = styled.div`
 
 const Gradient = styled.dv`
     z-index: 3;
-    40.04
+    back
 
 `
 
