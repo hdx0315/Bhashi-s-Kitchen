@@ -73,6 +73,7 @@ const Card = styled.div`
     border-radius: 2rem;
     overflow: hidden;
     position: relative;
+    min-width: 100%;
 
     
     img{
@@ -110,8 +111,7 @@ const Gradient = styled.div`
     width :100%;
     height:100%;
     background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.5));
-    
-
+  
 `
 
 
