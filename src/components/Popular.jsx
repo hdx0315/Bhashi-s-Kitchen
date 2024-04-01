@@ -41,7 +41,7 @@ function Popular() {
             <h3>Popular Picks</h3>
 
             <Splide options={{
-                perPage: 15,
+                perPage: 4,
                 arrows: false,
                 pagination: false,
                 drag: "free",
@@ -79,8 +79,7 @@ const Card = styled.div`
         position: absolute;
         left: 0;
         width: 100%;
-        height: 100%
-        object-fit: cover;
+        object-fit: ;
 
     }
 
@@ -91,7 +90,7 @@ const Card = styled.div`
         bottom: 0%;
         transform: translate(-50%, 0%);
         color: white;
-        width: 100%
+        width: 100%;
         text-align: center;
         font-weight: 600;
         font-size: 1rem;
