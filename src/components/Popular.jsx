@@ -17,14 +17,14 @@ function Popular() {
         const check = localStorage.getItem("popular"); 
         
         if (check) {
-            setPopular(JSON.pharse(check))
+            setPopular(JSON.parse(check))
         }
         else{
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=9f1b8c98ff7a41c89e3e1a10669795f2&number=9`);
+            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=9f1b8c98ff7a41c89e3e1a10669795f2&number=19`);
             
             const data = await api.json();
              
-            localStorage.setItem("popular", JSON.stringify(data.recipes))
+            localStorage.setItem("popular", JSON.stringify(data.recipes));
             setPopular(data.recipes)
         }
 
@@ -41,7 +41,7 @@ function Popular() {
             <h3>Popular Picks</h3>
 
             <Splide options={{
-                perPage: 5,
+                perPage: 15,
                 arrows: false,
                 pagination: false,
                 drag: "free",
@@ -103,9 +103,9 @@ const Card = styled.div`
     
 `;
 
-const Gradient = styled.dv`
+const Gradient = styled.div`
     z-index: 3;
-    back
+    
 
 `
 
