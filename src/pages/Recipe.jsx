@@ -13,7 +13,7 @@ function Recipe() {
 
   useEffect( () => {
   const fetchDetails = async () => {
-    const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=9f1b8c98ff7a41c89e3e1a10669795f2`);
+    const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=ba1d5103a19d470f8916d943268b69cd`);
               
     const detailData = await data.json(); 
     setDetails(detailData);
@@ -103,6 +103,7 @@ const Button = styled.button`
 
 const Info = styled.div`
   margin-left: 10rem;
+  position: relative;
 `
 
 export default Recipe

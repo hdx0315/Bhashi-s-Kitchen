@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
-import { useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 function Searched () {
 
@@ -14,7 +14,7 @@ function Searched () {
   const [searchedRecipes, setSearchedRecipes] = useState([]);
         
     const getSearched = async (name) => {
-      const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=9f1b8c98ff7a41c89e3e1a10669795f2&query=${name}&number=9`)
+      const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=ba1d5103a19d470f8916d943268b69cd&query=${name}&number=9`)
     
       const recipes = await data.json();
       setSearchedRecipes(recipes.results);
@@ -26,8 +26,10 @@ function Searched () {
         {searchedRecipes.map ((item) => {
             return (
                 <Card key={item.id}>
-                    <img src={item.image} alt="" />
-                    <h4>{item.title}</h4>
+                  <Link to={"/recipe/"+item.id}>x
+                      <img src={item.image} alt="" />
+                      <h4>{item.title}</h4>
+                  </Link>
                 </Card>
             );
         })}
