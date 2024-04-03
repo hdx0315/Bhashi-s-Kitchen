@@ -13,24 +13,41 @@ function Veggie() {
       getVeggie();
   }, [])
 
-
   const getVeggie = async () => {
+    const check = localStorage.getItem("veggie");
+    
+    if (check) {
+        setVeggie(JSON.parse(check));
+    } else {
+        let apiKey = import.meta.env.VITE_KEY_1;
+        let response;
 
-      const check = localStorage.getItem("veggie"); 
-      
-      if (check) {
-        setVeggie(JSON.parse(check))
-      }
-      else{
-          const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=9f1b8c98ff7a41c89e3e1a10669795f2&number=9&tags=vegetarian`);
-          
-          const data = await api.json();
-           
-          localStorage.setItem("veggie", JSON.stringify(data.recipes));
-          setVeggie(data.recipes)
-      }
+        try {
+            console.log("Using API Key 1");
+            response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29&tags=vegetarian`);
+            
+            if (response.status === 402) {
+                // Switch to the next API key
+                console.log("Switching to API Key 2");
+                apiKey = import.meta.env.VITE_KEY_2;
+                response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29&tags=vegetarian`);
+
+                if (response.status === 402) {
+                    // Switch to the third API key
+                    console.log("Switching to API Key 3");
+                    apiKey = import.meta.env.VITE_KEY_3;
+                    response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29&tags=vegetarian`);
+                }
+            }
+
+            const data = await response.json();
+            localStorage.setItem("veggie", JSON.stringify(data.recipes));
+            setVeggie(data.recipes);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     }
-
+};
 
 
   return (
@@ -40,10 +57,10 @@ function Veggie() {
             <h3>Vegetarian  Picks</h3>
  
             <Splide options={{
-                perPage: 3,
+                perPage: 4,
                 arrows: false,
                 drag: "free",
-                gap: '5rem',
+                gap: '21rem',
             }}>            
                 { veggie.map((recipe) => {
                     return(
@@ -70,13 +87,16 @@ function Veggie() {
 
 const Wrapper = styled.div`
     margin: 4rem 0rem;
-`
+`;
+
 const Card = styled.div`
+    margin-right: 44rem;
+    width: 300%;
+    min-width: 20rem;
     min-height: 25rem;
     border-radius: 2rem;
     overflow: hidden;
     position: relative;
-    min-width: 100%;
 
     
     img{

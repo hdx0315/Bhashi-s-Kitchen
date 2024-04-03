@@ -11,25 +11,56 @@ function Recipe() {
   const [details, setDetails] = useState({});
   const [activeTab, setActiveTab] = useState('instructions');
 
-  useEffect( () => {
-  const fetchDetails = async () => {
-    const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=ba1d5103a19d470f8916d943268b69cd`);
-              
-    const detailData = await data.json(); 
-    setDetails(detailData);
-    console.log(detailData.extendedIngredients);
-    console.log(params.name); 
-  }
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      const storedData = localStorage.getItem(params.name);
+      if (storedData) {
+        setDetails(JSON.parse(storedData));
+        return;
+      }
+
+      let apiKey = import.meta.env.VITE_KEY_1;
+      let response;
+
+      try {
+        console.log("Using API Key 1");
+        response = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${apiKey}`);
+            
+        if (response.status === 402) {
+          console.log("Switching to API Key 2");
+          // Switch to the next API key
+          apiKey = import.meta.env.VITE_KEY_2;
+          response = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${apiKey}`);
+
+          if (response.status === 402) {
+            console.log("Switching to API Key 3");
+            // Switch to the third API key
+            apiKey = import.meta.env.VITE_KEY_3;
+            response = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${apiKey}`);
+          }
+        }
+
+        const detailData = await response.json();
+        setDetails(detailData);
+        console.log(detailData.extendedIngredients);
+        console.log(params.name); 
+        localStorage.setItem(params.name, JSON.stringify(detailData)); // Save data to local storage
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
     fetchDetails();
   }, [params.name]);
 
+ 
   return (
     <DetailWrapper>
       
       <div>
         <h2>{details.title}</h2>
-        <img src={details.image} alt="" />
+        <StyledImg src={details.image} alt="" />
       </div>
 
       <Info>
@@ -48,6 +79,8 @@ function Recipe() {
           <div>
             <h3 dangerouslySetInnerHTML={{__html: details.summary}}>
             </h3>
+            {console.log(details.instructions)};
+            {console.log(details.summary)};
             <h3 dangerouslySetInnerHTML={{__html: details.instructions}}>
             </h3>
           </div>
@@ -71,6 +104,9 @@ const DetailWrapper = styled.div`
   margin-top: 10rem;
   margin-bottom: 5rem;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
 
   .active{
     background: linear-gradient(35deg, #494949, #313131);
@@ -97,14 +133,28 @@ const Button = styled.button`
   background: #fff;
   border: 2px solid black;
   margin-right: 2rem;
+  margin-bottom: 2rem;
   font-weight: 600;
 
 `
 
 const Info = styled.div`
-  margin-left: 10rem;
-  position: relative;
+  position: relative;flex: 1 1 100%; /* Set flex-grow, flex-shrink, and flex-basis */
+  margin-top: 2rem;
+  margin-left: 2rem;
+  flex: 1 1 100%; 
+
+  @media (min-width: 768px) {
+    flex-basis: 50%; /* Adjust flex-basis to 50% for medium screens and larger */
+    margin: 0rem;
+  }
 `
+
+const StyledImg = styled.img`
+  width: 100%; /* Set the image width to 100% */
+  height: auto; /* Automatically adjust the height to maintain aspect ratio */
+`;
+
 
 export default Recipe
 

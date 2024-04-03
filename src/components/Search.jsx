@@ -23,16 +23,19 @@ function Search() {
     </FormStyle>
   )
 }
-
 const FormStyle = styled.form`
-    margin: 0rem 20rem;
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    margin: 0 auto; /* Center the form itself */
+    max-width: 600px; /* Set a maximum width for the form */
+    width: 90%; /* Use 90% of the available width */
 
-    div{
+    div {
         width: 100%;
         position: relative;
     }
 
-    input{
+    input {
         width: 100%;
         border: none;
         background: linear-gradient(35deg, #494949, #313131);
@@ -44,14 +47,20 @@ const FormStyle = styled.form`
         outline: none;
     }
 
-    svg{
+    svg {
         position: absolute;
         top: 50%;
         left: 0%;
         transform: translate(100%, -50%);
         color: #fff;
     }
-`
+
+    @media (max-width: 768px) {
+        input {
+            width: 80%; /* Reduce width on smaller screens */
+        }
+    }
+`;
 
 export default Search
 

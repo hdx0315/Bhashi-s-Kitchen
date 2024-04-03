@@ -12,29 +12,42 @@ function Popular() {
         getPopular();
     }, [])
 
-
     const getPopular = async () => {
-
         const check = localStorage.getItem("popular"); 
         
         if (check) {
-            setPopular(JSON.parse(check))
+            setPopular(JSON.parse(check));
+        } else {
+            let apiKey = import.meta.env.VITE_KEY_1;
+            let response;
+    
+            try {
+                console.log("Using API Key 1");
+                response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29`);
+                
+                if (response.status === 402) {
+                    console.log("Switching to API Key 2");
+                    // Switch to the next API key
+                    apiKey = import.meta.env.VITE_KEY_2;
+                    response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29`);
+    
+                    if (response.status === 402) {
+                        console.log("Switching to API Key 3");
+                        // Switch to the third API key
+                        apiKey = import.meta.env.VITE_KEY_3;
+                        response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29`);
+                    }
+                }
+    
+                const data = await response.json();
+                localStorage.setItem("popular", JSON.stringify(data.recipes));
+                setPopular(data.recipes);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         }
-        else{
-            /* 9f1b8c98ff7a41c89e3e1a10669795f2*/
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=ba1d5103a19d470f8916d943268b69cd&number=9`);
-            
-            const data = await api.json(); 
-             
-            localStorage.setItem("popular", JSON.stringify(data.recipes));
-            setPopular(data.recipes)
-        }
-
-
-
-
-    }
-
+    };
+    
 
   return (
 
@@ -46,7 +59,7 @@ function Popular() {
                 perPage: 4,
                 arrows: false,
                 drag: "free",
-                gap: '5rem',
+                gap: '21rem',
             }}>            
                 { popular.map((recipe) => {
                     return(
@@ -71,7 +84,12 @@ function Popular() {
 const Wrapper = styled.div`
     margin: 4rem 0rem;
 `
+
+
 const Card = styled.div`
+    margin-right: 44rem;
+    width: 300%;
+    min-width: 20rem;
     min-height: 25rem;
     border-radius: 2rem;
     overflow: hidden;

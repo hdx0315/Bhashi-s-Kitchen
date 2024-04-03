@@ -37,6 +37,10 @@ const List = styled.div`
     justify-content: center;
     margin: 2rem 0rem;
 
+    @media (max-width: 600px) {
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
 `;
 
 const SLink = styled(NavLink)`

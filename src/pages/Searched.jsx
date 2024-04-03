@@ -12,14 +12,36 @@ function Searched () {
   }, [params.search]);
   
   const [searchedRecipes, setSearchedRecipes] = useState([]);
+  
+  const getSearched = async (name) => {
+    let apiKey = import.meta.env.VITE_KEY_1;
+    let response;
+
+    try {
+        console.log("Using API Key 1");
+        response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${name}&number=49`);
         
-    const getSearched = async (name) => {
-      const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=ba1d5103a19d470f8916d943268b69cd&query=${name}&number=9`)
-    
-      const recipes = await data.json();
-      setSearchedRecipes(recipes.results);
-    
+        if (response.status === 402) {
+            console.log("Switching to API Key 2");
+            // Switch to the next API key
+            apiKey = import.meta.env.VITE_KEY_2;
+            response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${name}&number=49`);
+
+            if (response.status === 402) {
+                console.log("Switching to API Key 3");
+                // Switch to the third API key
+                apiKey = import.meta.env.VITE_KEY_3;
+                response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${name}&number=49`);
+            }
+        }
+
+        const recipes = await response.json();
+        setSearchedRecipes(recipes.results);
+    } catch (error) {
+        console.error("Error fetching data:", error);
     }
+}
+
      
   return (
     <Grid>
