@@ -1,4 +1,5 @@
 
+
 import styled from "styled-components";
 import  { useParams } from 'react-router-dom';
 
@@ -8,16 +9,18 @@ function Recipe() {
 
   let params = useParams();
   const [details, setDetails] = useState({});
-  const [activeTab, setActiveTab] = useState('instructions')
+  const [activeTab, setActiveTab] = useState('instructions');
 
+  useEffect( () => {
   const fetchDetails = async () => {
-    const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=4b89129fc71b4d099fab6fab19f8210b`);
+    const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=9f1b8c98ff7a41c89e3e1a10669795f2`);
               
     const detailData = await data.json(); 
     setDetails(detailData);
+    console.log(detailData.extendedIngredients);
+    console.log(params.name); 
   }
 
-  useEffect( () => {
     fetchDetails();
   }, [params.name]);
 
@@ -40,6 +43,24 @@ function Recipe() {
           onClick={()=> setActiveTab("ingredients")}>
             Ingredients
         </Button>
+
+        {activeTab === 'instructions' && (
+          <div>
+            <h3 dangerouslySetInnerHTML={{__html: details.summary}}>
+            </h3>
+            <h3 dangerouslySetInnerHTML={{__html: details.instructions}}>
+            </h3>
+          </div>
+        )}
+        {activeTab === 'ingredients' && (
+          <ul>
+            {details.extendedIngredients && details.extendedIngredients.map((ingredient) => (
+              <li key={ingredient.id+Math.random()}>
+                {ingredient.original}
+              </li>
+            ))}
+            </ul>
+        )}
       </Info>
 
     </DetailWrapper>
@@ -85,3 +106,4 @@ const Info = styled.div`
 `
 
 export default Recipe
+
