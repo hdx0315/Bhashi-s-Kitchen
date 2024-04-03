@@ -12,8 +12,8 @@ function App() {
       <BrowserRouter>
       <Nav>
         <GiKnifeFork/>
-        <Logo to={"/"}>
-          Bashi's Kitchen'
+        <Logo to={"/Bhashi-s-Kitchen"}>
+          Bhashi's Kitchen
         </Logo>
       </Nav>
         <Search/>
