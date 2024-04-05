@@ -168,10 +168,7 @@ const Info = styled.div`
 
   @media (max-width:920px){
     padding-top: 2rem;
-
-    Button{
-    text-align: center;
-    }
+    padding-left: 0rem;
   }
 
 `
