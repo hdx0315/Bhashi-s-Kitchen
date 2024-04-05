@@ -14,9 +14,9 @@ function Pages() {
     <AnimatePresence exitBeforeEnte={false}>
       <Routes location={location} key={location.pathname}>
           <Route path='/Bhashi-s-Kitchen' element={<Home/>}/>
-          <Route path='/cuisine/:type' element={<Cuisine/>} />
-          <Route path='/searched/:search' element={<Searched/>} />
-          <Route path='/recipe/:name' element={<Recipe/>} />
+          <Route path='/Bhashi-s-Kitchen/cuisine/:type' element={<Cuisine/>} />
+          <Route path='/Bhashi-s-Kitchen/searched/:search' element={<Searched/>} />
+          <Route path='/Bhashi-s-Kitchen/recipe/:name' element={<Recipe/>} />
       </Routes>
       </AnimatePresence>
   )

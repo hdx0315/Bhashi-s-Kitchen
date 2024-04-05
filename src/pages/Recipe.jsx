@@ -106,7 +106,6 @@ const DetailWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  text-align: center;
 
   .active{
     background: linear-gradient(35deg, #494949, #313131);
@@ -115,6 +114,7 @@ const DetailWrapper = styled.div`
 
   h2{
     margin-bottom: 2rem;
+    text-align: center;
   }
 
   li{
@@ -139,8 +139,9 @@ const Button = styled.button`
 `
 
 const Info = styled.div`
-  position: relative;flex: 1 1 100%; /* Set flex-grow, flex-shrink, and flex-basis */
-  margin-top: 2rem;
+ // position: relative;
+  flex: 1 1 100%; /* Set flex-grow, flex-shrink, and flex-basis */
+  //margin-top: 2rem;
   margin-left: 2rem;
   flex: 1 1 100%; 
 

@@ -48,7 +48,7 @@ function Searched () {
         {searchedRecipes.map ((item) => {
             return (
                 <Card key={item.id}>
-                  <Link to={"/recipe/"+item.id}>x
+                  <Link to={"/Bhashi-s-Kitchen/recipe/"+item.id}>x
                       <img src={item.image} alt="" />
                       <h4>{item.title}</h4>
                   </Link>
