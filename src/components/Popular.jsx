@@ -23,19 +23,19 @@ function Popular() {
     
             try {
                 console.log("Using API Key 1");
-                response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29`);
+                response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=9f1b8c98ff7a41c89e3e1a10669795f2&number=29`);
                 
                 if (response.status === 402) {
                     console.log("Switching to API Key 2");
                     // Switch to the next API key
                     apiKey = import.meta.env.VITE_KEY_2;
-                    response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29`);
+                    response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=4b89129fc71b4d099fab6fab19f8210b&number=29`);
     
                     if (response.status === 402) {
                         console.log("Switching to API Key 3");
                         // Switch to the third API key
                         apiKey = import.meta.env.VITE_KEY_3;
-                        response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=29`);
+                        response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=ba1d5103a19d470f8916d943268b69cd&number=29`);
                     }
                 }
     
