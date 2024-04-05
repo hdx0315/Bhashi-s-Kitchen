@@ -58,22 +58,24 @@ function Recipe() {
   return (
     <DetailWrapper>
       
-      <div>
+      <Title>
         <h2>{details.title}</h2>
         <StyledImg src={details.image} alt="" />
-      </div>
+      </Title>
 
       <Info>
-        <Button 
-          className={activeTab === 'instructions' ? 'active' : ''}
-          onClick={ ()=> setActiveTab("instructions")} >
-            Instructions
-        </Button>
-        <Button 
-          className={activeTab === 'ingredients' ? 'active' : ''}
-          onClick={()=> setActiveTab("ingredients")}>
-            Ingredients
-        </Button>
+        <ButtonDiv>
+          <Button 
+            className={activeTab === 'instructions' ? 'active' : ''}
+            onClick={ ()=> setActiveTab("instructions")} >
+              Instructions
+          </Button>
+          <Button 
+            className={activeTab === 'ingredients' ? 'active' : ''}
+            onClick={()=> setActiveTab("ingredients")}>
+              Ingredients
+          </Button>
+        </ButtonDiv>
 
         {activeTab === 'instructions' && (
           <div>
@@ -100,12 +102,24 @@ function Recipe() {
   )
 }
 
+const Title = styled.div`
+  width:100%;
+`
+
+const ButtonDiv = styled.div`
+  Text-align: center;
+`
+
 const DetailWrapper = styled.div`
   margin-top: 10rem;
   margin-bottom: 5rem;
   display: flex;
-  flex-wrap: wrap;
+  //flex-wrap: wrap;
   justify-content: center;
+
+  @media (max-width:920px){
+    flex-wrap: wrap;
+  }
 
   .active{
     background: linear-gradient(35deg, #494949, #313131);
@@ -141,14 +155,25 @@ const Button = styled.button`
 const Info = styled.div`
  // position: relative;
   flex: 1 1 100%; /* Set flex-grow, flex-shrink, and flex-basis */
-  //margin-top: 2rem;
-  margin-left: 2rem;
+  margin-top: 2rem;
+  margin-left: rem;
   flex: 1 1 100%; 
+  padding-left: 3rem;
 
   @media (min-width: 768px) {
-    flex-basis: 50%; /* Adjust flex-basis to 50% for medium screens and larger */
     margin: 0rem;
   }
+
+  
+
+  @media (max-width:920px){
+    padding-top: 2rem;
+
+    Button{
+    text-align: center;
+    }
+  }
+
 `
 
 const StyledImg = styled.img`
