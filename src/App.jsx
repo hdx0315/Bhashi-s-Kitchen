@@ -11,8 +11,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Nav>
-        <GiKnifeFork/>
         <Logo to={"/Bhashi-s-Kitchen"}>
+        <GiKnifeFork/>
           Bhashi's Kitchen
         </Logo>
       </Nav>
